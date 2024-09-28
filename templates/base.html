@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Toggle Button for Sidebar -->
+    <button class="toggle-btn" onclick="toggleSidebar()">☰ </button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h2>DL4WCN</h2>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('preprocessing') }}">Preprocessing</a></li>
+            <!-- Add other links here -->
+        </ul>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container" id="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var container = document.getElementById('container');
+
+            sidebar.classList.toggle('active');
+
+            if (sidebar.classList.contains('active')) {
+                container.style.marginLeft = "0"; 
+            } else {
+                container.style.marginLeft = "220px"; 
+            }
+        }
+    </script>
+</body>
+</html>

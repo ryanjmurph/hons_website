@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+Preprocessing - Deep Learning for Wireless Community Networks
+{% endblock %}
+
+{% block content %}
+<h1>Preprocessing</h1>
+
+<img src="{{ url_for('static', filename='images/preprocess.png') }}" alt="Community Network Diagram" width="500" height="300">
+
+<h2>Stage 1: Data Collection</h2>
+<p>Data was collected from the Ocean View community network in 2019. These were raw PCAP files that capture network
+    traffic to and from the community network. The data was collected ethically.
+</p>
+<h2>Stage 2: Flow Splitting</h2>
+<p>Data was then split into flows using a python utility program called <i>pkt2flow</i>. Flows are aggregations of packets
+    that have the same source and destination IP numbers and port numbers. This was used to make the labelling stage smoother
+    and more seamless. 
+</p>
+<img src="{{ url_for('static', filename='images/pkt2.png') }}" alt="Community Network Diagram" width="1000" height="600">
+<h2>Stage 3: Label Flows</h2>
+<p> As the classification step in this project is a supervised learning problem, we will need labels for each packet.
+    The raw PCAP files do not come with labels and therefore we needed to find them ourselves. We used a deep packet
+    inspection tool called nDPI to label the data that was recently put into flows.
+</p>
+<img src="{{ url_for('static', filename='images/ndpi.png') }}" alt="Community Network Diagram" width="1000" height="600">
+<h2>Stage 4: Extracting the IP Payload</h2>
+<p>We will be using the IP payload as the training data for the models. This involves extracting the IP payload
+    for each packet and padding it with 0s if it is not of length 1480. This is to standardise the length of each record
+    being fed into the model. Each packet after padding is 1480 bits and 1 label. 
+</p>
+<img src="{{ url_for('static', filename='images/extraction.png') }}" alt="Community Network Diagram" width="1000" height="600">
+<h2>Stage 5: Balancing Classes</h2>
+After labelling the packets and extracting the payloads, we discovered that the data was very unbalanced with smoother
+packets being highly overrepresented and some highly underrepresented. Therfore, we decided to get rid of the classes
+that were underrepresented and reduce the overrepresented classes to a maximum of 10000 per class. This left us with a dataset
+of 10 classes with 9000-10000 of each class. This improved training as the model could learn each type of class equally well
+and got rid of any biases due to unbalcned data. 
+
+<img src="{{ url_for('static', filename='images/histo.png') }}" alt="Community Network Diagram" width="1000" height="600">
+
+<h2>Stage 6: Train, Test, Validation sets</h2>
+
+Lastly, the balanced data was then split into train, test and validation sets. We chose a 64% - 16% - 20% split
+for the train, test and validation set respetively. The result of this is the data we will be using to build and evaluate
+our models.
+
+<img src="{{ url_for('static', filename='images/datasets.png') }}" alt="Community Network Diagram" width="1000" height="600">
+
+{% endblock %}

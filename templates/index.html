@@ -1,51 +1,15 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Deep Learning for Wireless Community Networks</title>
-        <link rel="stylesheet" type="text/css" href="static/styles.css">
-    </head>
-    <body>
-        <button class="toggle-btn" onclick="toggleSidebar()">☰ </button>
+{% extends "base.html" %}
 
-        <div class="sidebar" id="sidebar">
-            <h2>DL4WCN</h2>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Research</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
-        
-        <div class="container">
-            <h1>Deep Learning for Wireless Community Networks</h1>
-            <h3>Using deep learning to classify packets coming to and from a community network to ensure QoS in a low resource environment.</h3>
-            <h4>This project was done by computer science honours students Boitumelo Mokoka, Michael Gamsu and Ryan Murphy.</h4>
-        </div>
+{% block title %}
+Home - Deep Learning for Wireless Community Networks
+{% endblock %}
 
-        <div class="container">
-            <h3>Context and Goals of this Project</h3>
-            <p>The goal of this project is to classify network packets into their respective classes. The classes are the application they are associated with e.g classifying a Youtube packet as Youtube. This classifier did not only need to be accurate but also fast and memory efficient in order for a community network to use it.</p>
-            <h4>Community Networks</h4>
-            <p>Community networks are community governed and operated network infrastructures for digital communication. The users are the ones who run them and manage them with funding coming from the users themselves. They are extremely important in low resource communities as they provide low-cost internet access.</p>
-            <img src="static/images/community_network.jpg" alt="Community Network Diagram" width="500" height="300">
-        </div>
+{% block content %}
+<h1>Deep Learning for Wireless Community Networks</h1>
+<h3>Using deep learning to classify packets coming to and from a community network to ensure QoS in a low resource environment.</h3>
+<h4>This project was done by computer science honours students Boitumelo Mokoka, Michael Gamsu and Ryan Murphy.</h4>
 
-        <script>
-            function toggleSidebar() {
-                var sidebar = document.getElementById('sidebar');
-                var containers = document.querySelectorAll('.container');
-
-                sidebar.classList.toggle('active');
-                
-                containers.forEach(container => {
-                    if (sidebar.classList.contains('active')) {
-                        container.style.marginLeft = "0"; 
-                    } else {
-                        container.style.marginLeft = "220px"; 
-                    }
-                });
-            }
-        </script>
-    </body>
-</html>
+<h3>Context and Goals of this Project</h3>
+<p>The goal of this project is to classify network packets into their respective classes...</p>
+<img src="{{ url_for('static', filename='images/community_network.jpg') }}" alt="Community Network Diagram" width="500" height="300">
+{% endblock %}

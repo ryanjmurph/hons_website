@@ -1,7 +1,7 @@
 body, html {
     margin: 0;
     padding: 0;
-    height: 100%;
+    min-height: 100%;
     font-family: Arial, sans-serif;
 }
 
@@ -64,24 +64,40 @@ body, html {
 .container {
     margin-left: 220px;
     padding: 20px;
-    height: 100vh;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    transition: margin-left 0.3s ease;
+    text-align: center;
 }
 
 .container h1 {
     font-size: 36px;
+    margin-top: 60px;
     margin-bottom: 10px;
 }
 
-.container h3, .container h4 {
+.container h2, .container h3, .container h4 {
     margin: 10px 0;
-    text-align: center;
 }
 
-.container + .container {
+.container img {
+    max-width: 100%;
     height: auto;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .container {
+        margin-left: 0;
+    }
+    .sidebar.active {
+        margin-left: 0;
+    }
 }
