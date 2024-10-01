@@ -34,7 +34,7 @@
 							<ul>
 								<li><a href="#home">Home</a></li>
 								<li><a href="#preprocessing">Preprocessing</a></li>
-								<li><a href="#another">another</a></li>
+								<li><a href="#ryan">Ryan's Models</a></li>
 								<li><a href="#about">About</a></li>
 								<li><a href="#contact">Contact</a></li>
 								<!--<li><a href="#elements">Elements</a></li>-->
@@ -121,6 +121,53 @@
 								</article>
 
 						<!-- About -->
+						<article id="ryan">
+							<h2 class="major">Ryan's Models</h2>
+							<span class="image main"><img src="images/ryan_models/pca.webp" alt="" /></span>
+							<p>Ryan produced a series of semi-supervised models that include a 1d Convolutional Neural Network (1d-CNN), 2d Convolutional Neural Network (2d-CNN)
+								and a Multi-layer Perceptron (MLP). Before data was fed into these models. Principal Component Analysis (PCA)
+								was applied to reduce the feature space down from 1480 to 100. PCA reduces the feature space while keeping as much variance
+								in the data as possible. The feature reduction
+								was to reduce the amount of model parameters which lead to faster classification and less memory used.
+							</p>
+							<h3 class="major">Experiments</h3>
+							<p>The model's hyperparameters were tuned extensively to try and find a hyperparameter combination that led to both fast and accurate models.
+							After the hyperparameters were chosen, the experimentation began. The paramater count for each model was varied and tested with test accuracy, 
+							packets classified per second, and peak memory usage was recorded for the respective parameter count. This was done for the semi-supervised models
+							and the benchmark 2d-CNN.</p>
+							<h3 class="major">Results</h3>
+							<span class="image main"><img src="images/ryan_models/Figure_1.png" alt="" /></span>
+							<p>None of the semi-supervised models beat the benchmark 2d-CNN in terms of accuracy. However, the MLP comes the closest
+							with a peak accuracy of roughy 90%. This shows the MLPs ability to generalise well.
+							The PCA-1d-CNN was the worst peforming model with accuracies up to 84%. 1d-CNNs work specfically well with time-series data
+							and due to the fact the data was not in time-series format it did not perform as well. The PCA-2d-CNN reached accuracies
+							of up to 88%. The inferior performance to the MLP could be attributed to the fact that it could not learn the spatial
+							dependencies in the data with 100 records per feature. This could explain why the benchmark 2d-CNN performs very well but 
+							the PCA-2d-CNN does not perform as well.</p>
+							<span class="image main"><img src="images/ryan_models/Figure_2.png" alt="" /></span>
+							<p>All of the semi-supervised models out-perform the benchmark model in terms of packets classified per second.
+							This showed that using PCA to reduce classification time works. 
+							The general trend on these graphs was that when parameter size increases packets classified per second decreases.
+							This is to be expected as the more parameters, the more operations the model has to do during the forward-pass.
+							The PCA-CNN models were able to classify a similar
+							amount of packets per second for each paramater size. However, the PCA-MLP out-performed all of the models by a long way.
+							This is due to its simpleness and absence of complex mechanisms, unlike the CNN models.</p> 
+							<span class="image main"><img src="images/ryan_models/Figure_3.png" alt="" /></span>
+							<p>In this graph we see that peak memory usage generally increaes as paramater size increases. All of the models
+							had similar results but the MLP was slightly lower than the others in general. All of these memory usages
+							are small and should be able to be used on a community network for real time classification.</p>
+							<h3 class="major">Conclusion</h3>
+							<p>The PCA-MLP is the clear favourite to be used by the community network. It exhibits accuracy of above 90%
+							and can classify a very large amount of packets per second. This is perfect for real time classification in a 
+							low resource environment. A case can be made for the use of the benchmark 2d-CNN due to its high accuracy. However, 
+							due to its low packets classified per second, it is unlikely to work well for real-time classification.</p>
+				
+
+							</article>
+
+
+
+
 							<article id="about">
 								<h2 class="major">About</h2>
 								<span class="image main"><img src="images/pic03.jpg" alt="" /></span>
