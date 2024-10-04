@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <!--
 	Dimension by HTML5 UP
 	html5up.net | @ajlkn
@@ -13,294 +13,343 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
-
 		<!-- Wrapper -->
 		<div id="top-left-text">DL4WCN</div>
 
-			<div id="wrapper">
+		<div id="wrapper">
+			<!-- Header -->
+			<header id="header">
+				<div class="logo">
+					<span class="icon fa-gem"></span>
+				</div>
+				<div class="content">
+					<div class="inner">
+						<h1>DL4WCN</h1>
+						<p>Classifying network traffic using deep learning to imrpove QoS in a low resource environments.</p>
+					</div>
+				</div>
 
-				<!-- Header -->
-					<header id="header">
-						<div class="logo">
-							<span class="icon fa-gem"></span>
-						</div>
-						<div class="content">
-							<div class="inner">
-								<h1>DL4WCN</h1>
-								<p>Classifying network traffic using deep learning to imrpove QoS in a low resource environments.</p>
+				<div>
+					<nav>
+						<ul>
+							<li><a href="#home">Home</a></li>
+							<li><a href="#preprocessing">Preprocessing</a></li>
+							<li><a href="#documents">Documents</a></li>
+							<!-- <li><a href="#contact">Contact</a></li> -->
+							<!--<li><a href="#elements">Elements</a></li>-->
+						</ul>
+					</nav>
+				</div>
+
+				<nav>
+					<ul>
+						<li><a href="#ryan">Ryan's Models</a></li>
+						<li><a href="#tumi">Boitumelo's Models</a></li>
+						<li><a href="#michael">Michael's Models</a></li>
+						<!--<li><a href="#elements">Elements</a></li>-->
+					</ul>
+				</nav>
+			</header>
+
+			<!-- Main -->
+			<div id="main">
+				<!-- Intro -->
+				<article id="home">
+					<h2 class="major">Home</h2>
+					<span class="image main"><img src="images/models.jpg" alt="" /></span>
+					<h3 class="major">Research Context</h3>
+					<p>
+						The goal of this project was to develop deep learning models that are able to classify packets over a network, in particular, a community network. A community network is a low
+						resource network that is not supported by Internet Service Providers (ISPs), but rather by the people of the community. Quality of Service (QoS) is very important in any
+						network and in might be hard to attain in a community network due to their lack of resources. Therefore, they can make use of a real time classifier to know which packets are
+						coming through their network and in order to give more resources to packets that may be more prolfic it a given time. This is where deep learning comes into play. We used deep
+						learning to develop models that can classify packets accuraretely, quickly, and efficently in order to suit the needs of a community network.
+					</p>
+					<br />
+					<h3 class="major">Methodology</h3>
+					<p>
+						We individually developed our own deep learning models and tested it agaisnt a common model. This model was a 2d-CNN. The 2d-CNN was accurate but relatively slow. We ran a
+						series of experiments on our models and on the benchmark model comparing accuracy, memory use, and number of packets per second all over different numbers of parameters in our
+						models.
+					</p>
+					<br />
+					<h3 class="major">Research Questions</h3>
+					<ul>
+						<li>Can we develop models that exhibit accuracy levels similar to the 2d-CNN and that can be used in a community network?</li>
+						<li>Can we develop models that are able to classify more packets per second than the 2d-CNN and are able to be used in real time classification?</li>
+						<li>Can we develop models that use less memory that the 2d-CNN and are efficient enough to be used in a low resource environment?</li>
+					</ul>
+				</article>
+
+				<!-- Preprocessing-->
+				<article id="preprocessing">
+					<h2 class="major">Preprocessing</h2>
+					<span class="image main"><img src="images/prepro.png" alt="" /></span>
+					<h2>Stage 1: Data Collection</h2>
+					<p>
+						Data was collected from the Ocean View community network in 2019. These were raw PCAP files that capture network traffic to and from the community network. The data was
+						collected ethically.
+					</p>
+					<br />
+					<h2>Stage 2: Flow Splitting</h2>
+					<p>
+						Data was then split into flows using a python utility program called <i>pkt2flow</i>. Flows are aggregations of packets that have the same source and destination IP numbers and
+						port numbers. This was used to make the labelling stage smoother and more seamless.
+					</p>
+					<span class="image main"><img src="images/p_images/pkt2.png" alt="" /></span>
+					<h2>Stage 3: Label Flows</h2>
+					<p>
+						As the classification step in this project is a supervised learning problem, we will need labels for each packet. The raw PCAP files do not come with labels and therefore we
+						needed to find them ourselves. We used a deep packet inspection tool called nDPI to label the data that was recently put into flows.
+					</p>
+					<span class="image main"><img src="images/p_images/ndpi.png" alt="" /></span>
+					<h2>Stage 4: Extracting the IP Payload</h2>
+					<p>
+						We will be using the IP payload as the training data for the models. This involves extracting the IP payload for each packet and padding it with 0s if it is not of length 1480.
+						This is to standardise the length of each record being fed into the model. Each packet after padding is 1480 bits and 1 label.
+					</p>
+					<span class="image main"><img src="images/p_images/extraction.png" alt="" /></span>
+					<h2>Stage 5: Balancing Classes</h2>
+					<p>
+						After labelling the packets and extracting the payloads, we discovered that the data was very unbalanced with smoother packets being highly overrepresented and some highly
+						underrepresented. Therfore, we decided to get rid of the classes that were underrepresented and reduce the overrepresented classes to a maximum of 10000 per class. This left us
+						with a dataset of 10 classes with 9000-10000 of each class. This improved training as the model could learn each type of class equally well and got rid of any biases due to
+						unbalcned data.
+					</p>
+					<span class="image main"><img src="images/p_images/histo.png" alt="" /></span>
+					<h2>Stage 6: Train, Test, Validation sets</h2>
+					<p>
+						Lastly, the balanced data was then split into train, test and validation sets. We chose a 64% - 16% - 20% split for the train, test and validation set respetively. The result
+						of this is the data we will be using to build and evaluate our models.
+					</p>
+					<span class="image main"><img src="images/p_images/datasets.png" alt="" /></span>
+				</article>
+
+				<!-- Documents-->
+				<article id="documents">
+					<h2><a href="Documents/POSTER.pdf">Project Poster</a></h2>
+					<object data="Documents/POSTER.pdf" type="application/pdf" width="100%" height="150%">Documents/POSTER.pdf</object>
+					<a href="Documents/POSTER.pdf" class="button">Download</a>
+
+					<h2><a href="Documents/Project Proposal.pdf">Project Proposal</a></h2>
+					<object data="Documents/Project Proposal.pdf" type="application/pdf" width="100%" height="150%">Documents/Prject Proposal.pdf</object>
+					<a href="Documents/Project Proposal.pdf" class="button">Download</a>
+
+					<h2><a href="Documents/Tumi Literature Review.pdf">Boitumelo's Literature Review</a></h2>
+					<object data="Documents/Tumi Literature Review.pdf" type="application/pdf" width="100%" height="150%">Documents/Tumi Literature Review.pdf</object>
+					<a href="Documents/Tumi Literature Review.pdf" class="button">Download</a>
+
+					<h2><a href="Documents/Tumi Final Paper.pdf">Boitumelo's Final Paper</a></h2>
+					<object data="Documents/Tumi Final Paper.pdf" type="application/pdf" width="100%" height="150%">Documents/Tumi Final Paper.pdf</object>
+					<a href="Documents/Tumi Final Paper.pdf" class="button">Download</a>
+
+					<h2><a href="Documents/Michael Final Paper.pdf">Michael's Final Paper</a></h2>
+					<object data="Documents/Michael Final Paper.pdf" type="application/pdf" width="100%" height="150%">Documents/Michael's Final Paper.pdf</object>
+					<a href="Documents/Michael Final Paper.pdf" class="button">Download</a>
+
+					<h2><a href="Documents/Michael Literature Review.pdf">Michael's Literature Review</a></h2>
+					<object data="Documents/Michael Literature Review.pdf" type="application/pdf" width="100%" height="150%">Documents/Michael's Literature Review.pdf</object>
+					<a href="Documents/Michael Literature Review.pdf" class="button">Download</a>
+				</article>
+
+				<!-- Ryan's Page -->
+				<article id="ryan">
+					<h2 class="major">Ryan's Models</h2>
+					<span class="image main"><img src="images/ryan_models/pca.webp" alt="" /></span>
+					<p>
+						Ryan produced a series of semi-supervised models that include a 1d Convolutional Neural Network (1d-CNN), 2d Convolutional Neural Network (2d-CNN) and a Multi-layer Perceptron
+						(MLP). Before data was fed into these models. Principal Component Analysis (PCA) was applied to reduce the feature space down from 1480 to 100. PCA reduces the feature space
+						while keeping as much variance in the data as possible. The feature reduction was to reduce the amount of model parameters which lead to faster classification and less memory
+						used.
+					</p>
+					<h3 class="major">Experiments</h3>
+					<p>
+						The model's hyperparameters were tuned extensively to try and find a hyperparameter combination that led to both fast and accurate models. After the hyperparameters were
+						chosen, the experimentation began. The paramater count for each model was varied and tested with test accuracy, packets classified per second, and peak memory usage was
+						recorded for the respective parameter count. This was done for the semi-supervised models and the benchmark 2d-CNN.
+					</p>
+					<h3 class="major">Results</h3>
+					<span class="image main"><img src="images/ryan_models/Figure_1.png" alt="" /></span>
+					<p>
+						None of the semi-supervised models beat the benchmark 2d-CNN in terms of accuracy. However, the MLP comes the closest with a peak accuracy of roughy 90%. This shows the MLPs
+						ability to generalise well. The PCA-1d-CNN was the worst peforming model with accuracies up to 84%. 1d-CNNs work specfically well with time-series data and due to the fact the
+						data was not in time-series format it did not perform as well. The PCA-2d-CNN reached accuracies of up to 88%. The inferior performance to the MLP could be attributed to the
+						fact that it could not learn the spatial dependencies in the data with 100 records per feature. This could explain why the benchmark 2d-CNN performs very well but the
+						PCA-2d-CNN does not perform as well.
+					</p>
+					<span class="image main"><img src="images/ryan_models/Figure_2.png" alt="" /></span>
+					<p>
+						All of the semi-supervised models out-perform the benchmark model in terms of packets classified per second. This showed that using PCA to reduce classification time works. The
+						general trend on these graphs was that when parameter size increases packets classified per second decreases. This is to be expected as the more parameters, the more operations
+						the model has to do during the forward-pass. The PCA-CNN models were able to classify a similar amount of packets per second for each paramater size. However, the PCA-MLP
+						out-performed all of the models by a long way. This is due to its simpleness and absence of complex mechanisms, unlike the CNN models.
+					</p>
+					<span class="image main"><img src="images/ryan_models/Figure_3.png" alt="" /></span>
+					<p>
+						In this graph we see that peak memory usage generally increaes as paramater size increases. All of the models had similar results but the MLP was slightly lower than the others
+						in general. All of these memory usages are small and should be able to be used on a community network for real time classification.
+					</p>
+					<h3 class="major">Conclusion</h3>
+					<p>
+						The PCA-MLP is the clear favourite to be used by the community network. It exhibits accuracy of above 90% and can classify a very large amount of packets per second. This is
+						perfect for real time classification in a low resource environment. A case can be made for the use of the benchmark 2d-CNN due to its high accuracy. However, due to its low
+						packets classified per second, it is unlikely to work well for real-time classification.
+					</p>
+				</article>
+
+				<!-- Tumi's Page-->
+				<article id="tumi">
+					<h2 class="major">Boitumelo's Models</h2>
+
+					<p>
+						Boitumelo investigated the application of both Stacked Autoencoders (SAEs) and Recurrent Neural Networks (RNNs). The SAE architecture is designed for unsupervised feature
+						reduction by approximating a non-linear function. Its capability to detect patterns within the dataset and generate a more compact representation of the data was leveraged to
+						enhance the performance of the classification task. Two RNN classifiers, a Multi-Layer Perceptron (MLP) and a Convolutional Neural Network (CNN), were compared for both their
+						classification effectiveness and computational efficiency.
+					</p>
+
+					<span class="image main"><img src="images/tumi_models/AE.png" alt="" /></span>
+
+					<h3 class="major">Experiments</h3>
+
+					<p>Each hybrid architecture was tested for both accuracy and efficiency across a range of sizes changing the number of parameters in each model. This was done for</p>
+
+					<h3 class="major">Results</h3>
+					<span class="image main">
+						<img src="images/tumi_models/Accuracy Graph.png" />
+						<p>jjejjeje</p>
+					</span>
+				</article>
+
+				<article id="about">
+					<h2 class="major">About</h2>
+					<span class="image main"><img src="images/pic03.jpg" alt="" /></span>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi,
+						fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra
+						ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.
+					</p>
+				</article>
+
+				<article id="michael">
+					<h2 class="major">Michael's Models</h2>
+					<p>
+						The Michael's research investigates several types of deep learning models, both simple and hybrid, to understand their effectiveness in traffic classification. The simplest
+						models considered are Multi-Layer Perceptrons (MLPs), which are basic feedforward neural networks, and Convolutional Neural Networks (CNNs), which are excellent at capturing
+						spatial features from data.
+					</p>
+					<p>
+						Beyond these basic architectures, Michael explores hybrid models that combine CNNs with Recurrent Neural Networks (RNNs), specifically Long Short-Term Memory (LSTM) and Gated
+						Recurrent Unit (GRU) layers. These hybrid models are designed to capture both spatial and temporal patterns in network traffic data. CNNs handle the spatial aspect recognising
+						patterns within the data. While RNNs, particularly LSTM and GRU, focus on the temporal sequences, making them more suited for tasks involving time-based patterns.<ul>
+							<li>1D-CNN-LSTM and 1D-CNN-GRU, where 1D-CNN is used for feature extraction, followed by LSTM or GRU layers for sequence learning.</li>
+							<li>2D-CNN-LSTM and 2D-CNN-GRU, which are similar but operate on two-dimensional data, making them capable of handling more complex spatial patterns.</li>
+						</ul>
+					</p>
+					<span class="image main"><img src="images/michael_models/Hybrid_model.png" alt=""/></span>
+					<h3 class="major">Experiments</h3>
+					<p><strong>Classification Accuracy:</strong> This evaluates whether hybrid models improve traffic classification accuracy compared to simpler models. Hybrid models are expected to perform better by leveraging both spatial and temporal features, offering more accurate classifications.</p>
+					<p><strong>Real-Time Traffic Classification:</strong> This examines the ability of hybrid models to classify traffic in real-time by measuring their Packet Processing Speed (PPS). The goal is to determine if they can process over 10,000 PPS, which is essential for achieving real-time classification in low-resource networks.</p>
+					<p><strong>Memory Efficiency:</strong> This explores how model complexity impacts memory usage. The experiment measures the peak memory consumption for each model and investigates the trade-offs between model size, memory usage, and accuracy. Understanding these trade-offs is critical for deployment in environments with limited resources.</p>
+					
+					<h3 class="major">Results</h3>
+					<span class="image main"><img src="images/michael_models/Accuracy.jpeg" alt="" /></span>
+					<p>
+						Hybrid models showed superior accuracy in traffic classification, with 1D-CNN-LSTM and 1D-CNN-GRU achieving 94.3% and 94.21%, respectively. 
+						Simpler models like MLP and 1D-CNN reached 85.7% and 92.64%. 
+						The 2D-CNN-LSTM and 2D-CNN-GRU also performed well, surpassing 91%. 
+						However, accuracy gains plateaued with increased complexity, showing diminishing returns.
+					</p>
+					<span class="image main"><img src="images/michael_models/PPS.jpeg" alt="" /></span>
+					<p>
+						For packet processing speed (PPS), MLP was the most efficient, consistently above 16,000 PPS, suitable for real-time use in low-resource environments. 
+						1D-CNN and 2D-CNN performed moderately well, staying near the 10,000 PPS threshold. 
+						The 2D-CNN-LSTM and 2D-CNN-GRU both started above the 10,000 PPS threshold when their parameter counts were lower, but their performance dropped significantly as the models became more complex
+						On the other hand, 1D-CNN-LSTM and 1D-CNN-GRU, struggled to maintain high PPS, making them less viable for real-time applications despite their accuracy.
+					</p>
+					<span class="image main"><img src="images/michael_models/Mem.jpeg" alt="" /></span>
+					<p>
+						In terms of memory usage, MLP was the most efficient, using only 0.128 MB, while hybrid models like 2D-CNN-LSTM and 2D-CNN-GRU required up to 0.447 MB. 
+						Though hybrids offer higher accuracy, their increased memory requirements may challenge deployment in resource-constrained environments.
+					</p>
+					<h3 class="major">Conclusion</h3>
+					<p>
+						Hybrid models such as 2D-CNN-LSTM and 2D-CNN-GRU provided the a good balance between accuracy and performance for lower parameters, while 2D-CNN and 1D-CNN delivered strong overall results depending on the specific requirements. 
+						MLP offered the best real-time performance and memory efficiency, albeit with lower accuracy.
+						Future research should focus on optimising hybrid models for real-time use and exploring lightweight architectures like MobileNet to enhance efficiency. Further testing across diverse datasets and networks is necessary to assess scalability and adaptability.
+
+
+
+
+
+
+
+					</p>
+				</article>
+
+				<!-- Contact -->
+				<article id="contact">
+					<h2 class="major">Contact</h2>
+					<form method="post" action="#">
+						<div class="fields">
+							<div class="field half">
+								<label for="name">Name</label>
+								<input type="text" name="name" id="name" />
+							</div>
+							<div class="field half">
+								<label for="email">Email</label>
+								<input type="text" name="email" id="email" />
+							</div>
+							<div class="field">
+								<label for="message">Message</label>
+								<textarea name="message" id="message" rows="4"></textarea>
 							</div>
 						</div>
+						<ul class="actions">
+							<li><input type="submit" value="Send Message" class="primary" /></li>
+							<li><input type="reset" value="Reset" /></li>
+						</ul>
+					</form>
+					<ul class="icons">
+						<li>
+							<a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a>
+						</li>
+						<li>
+							<a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a>
+						</li>
+						<li>
+							<a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a>
+						</li>
+						<li>
+							<a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a>
+						</li>
+					</ul>
+				</article>
 
-						<div>
-							<nav>
-							<ul>
-								<li><a href="#home">Home</a></li>
-								<li><a href="#preprocessing">Preprocessing</a></li>
-								<li><a href="#documents">Documents</a></li>
-								<!-- <li><a href="#contact">Contact</a></li> -->
-								<!--<li><a href="#elements">Elements</a></li>-->
-							</ul>
-						</nav>
-						</div>
-						
+				<!-- Elements -->
+				<article id="elements">
+					<h2 class="major">Elements</h2>
 
-						<nav>
-							<ul>
-								<li><a href="#ryan">Ryan's Models</a></li>
-								<li><a href="#tumi">Boitumelo's Models</a></li>
-								<li><a href="#michael">Michael's Models</a></li>
-								<!--<li><a href="#elements">Elements</a></li>-->
-							</ul>
-						</nav>
-					</header>
-				
-
-				<!-- Main -->
-					<div id="main">
-
-						<!-- Intro -->
-							<article id="home">
-								<h2 class="major">Home</h2>
-								<span class="image main"><img src="images/models.jpg" alt="" /></span>
-								<h3 class="major">Research Context</h3>
-								<p>The goal of this project was to develop deep learning models that are able to classify
-								packets over a network, in particular, a community network. A community network is a 
-								low resource network that is not supported by Internet Service Providers (ISPs), but rather
-								by the people of the community. Quality of Service (QoS) is very important in any network
-								and in might be hard to attain in a community network due to their lack of resources. Therefore,
-								they can make use of a real time classifier to know which packets are coming through their network
-								and in order to give more resources to packets that may be more prolfic it a given time. This 
-								is where deep learning comes into play. We used deep learning to develop models that can classify 
-								packets accuraretely, quickly, and efficently in order to suit the needs of a community network.</p>
-								<br>
-								<h3 class="major">Methodology</h3>
-								<p>We individually developed our own deep learning models and tested it agaisnt a common model. This model was 
-								a 2d-CNN. The 2d-CNN was accurate but relatively slow. We ran a series of experiments on our models and 
-								on the benchmark model comparing accuracy, memory use, and number of packets per second all over different 
-								numbers of parameters in our models.</p>
-								<br>
-								<h3 class="major">Research Questions</h3>
-								<ul>
-									<li>Can we develop models that exhibit accuracy levels similar to the 2d-CNN and that can be used in a community network?</li>
-									<li>Can we develop models that are able to classify more packets per second than the 2d-CNN and are able to be used in real time classification?</li>
-									<li>Can we develop models that use less memory that the 2d-CNN and are efficient enough to be used in a low resource environment?</li>
-								  </ul>
-								</article>
-
-								
-		
-								
-
-
-						<!-- Preprocessing-->
-							<article id="preprocessing">
-								<h2 class="major">Preprocessing</h2>
-								<span class="image main"><img src="images/prepro.png" alt="" /></span>
-								<h2>Stage 1: Data Collection</h2>
-								<p>Data was collected from the Ocean View community network in 2019. These were raw PCAP files that capture network
-									traffic to and from the community network. The data was collected ethically.
-								</p> 
-								<br>
-								<h2>Stage 2: Flow Splitting</h2>
-								<p>Data was then split into flows using a python utility program called <i>pkt2flow</i>. Flows are aggregations of packets
-									that have the same source and destination IP numbers and port numbers. This was used to make the labelling stage smoother
-									and more seamless. 
-								</p>
-								<span class="image main"><img src="images/p_images/pkt2.png" alt="" /></span>
-								<h2>Stage 3: Label Flows</h2>
-								<p> As the classification step in this project is a supervised learning problem, we will need labels for each packet.
-									The raw PCAP files do not come with labels and therefore we needed to find them ourselves. We used a deep packet
-									inspection tool called nDPI to label the data that was recently put into flows.
-								</p>
-								<span class="image main"><img src="images/p_images/ndpi.png" alt="" /></span>
-								<h2>Stage 4: Extracting the IP Payload</h2>
-								<p>We will be using the IP payload as the training data for the models. This involves extracting the IP payload
-									for each packet and padding it with 0s if it is not of length 1480. This is to standardise the length of each record
-									being fed into the model. Each packet after padding is 1480 bits and 1 label. 
-								</p>
-								<span class="image main"><img src="images/p_images/extraction.png" alt="" /></span>
-								<h2>Stage 5: Balancing Classes</h2>
-								<p>After labelling the packets and extracting the payloads, we discovered that the data was very unbalanced with smoother
-								packets being highly overrepresented and some highly underrepresented. Therfore, we decided to get rid of the classes
-								that were underrepresented and reduce the overrepresented classes to a maximum of 10000 per class. This left us with a dataset
-								of 10 classes with 9000-10000 of each class. This improved training as the model could learn each type of class equally well
-								and got rid of any biases due to unbalcned data.</p>
-								<span class="image main"><img src="images/p_images/histo.png" alt="" /></span>
-								<h2>Stage 6: Train, Test, Validation sets</h2>
-								<p>Lastly, the balanced data was then split into train, test and validation sets. We chose a 64% - 16% - 20% split
-								for the train, test and validation set respetively. The result of this is the data we will be using to build and evaluate
-								our models.</p>
-								<span class="image main"><img src="images/p_images/datasets.png" alt="" /></span>
-								</article>
-
-						<!-- Documents-->
-						<article id="documents">
-							<h2><a href="Documents/POSTER.pdf">Project Poster</a></h2>
-							<object data="Documents/POSTER.pdf" type="application/pdf" width="100%" height="150%">
-								Documents/POSTER.pdf
-							</object>
-							<a href = "Documents/POSTER.pdf" clas="button">Download</a>
-						
-
-						
-							<h2><a href="Documents/Project Proposal.pdf">Project Proposal</a></h2>
-							<object data="Documents/Project Proposal.pdf" type="application/pdf" width="100%" height="150%">
-								Documents/Prject Proposal.pdf
-							</object>
-							<a href = "Documents/Project Proposal.pdf" clas="button">Download</a>
-						
-
-						
-							<h2><a href="Documents/Tumi Literature Review.pdf">Boitumelo's Literature Review</a></h2>
-							<object data="Documents/Tumi Literature Review.pdf" type="application/pdf" width="100%" height="150%">
-								Documents/Tumi Literature Review.pdf
-							</object>
-							<a href = "Documents/Tumi Literature Review.pdf" clas="button">Download</a>
-
-							<h2><a href="Documents/Tumi Final Paper.pdf">Boitumelo's Final Paper</a></h2>
-							<object data="Documents/Tumi Final Paper.pdf" type="application/pdf" width="100%" height="150%">
-								Documents/Tumi Final Paper.pdf
-							</object>
-							<a href = "Documents/Tumi Final Paper.pdf" clas="button">Download</a>
-						</article>
-
-						<!-- Ryan's Page -->
-						<article id="ryan">
-							<h2 class="major">Ryan's Models</h2>
-							<span class="image main"><img src="images/ryan_models/pca.webp" alt="" /></span>
-							<p>Ryan produced a series of semi-supervised models that include a 1d Convolutional Neural Network (1d-CNN), 2d Convolutional Neural Network (2d-CNN)
-								and a Multi-layer Perceptron (MLP). Before data was fed into these models. Principal Component Analysis (PCA)
-								was applied to reduce the feature space down from 1480 to 100. PCA reduces the feature space while keeping as much variance
-								in the data as possible. The feature reduction
-								was to reduce the amount of model parameters which lead to faster classification and less memory used.
-							</p>
-							<h3 class="major">Experiments</h3>
-							<p>The model's hyperparameters were tuned extensively to try and find a hyperparameter combination that led to both fast and accurate models.
-							After the hyperparameters were chosen, the experimentation began. The paramater count for each model was varied and tested with test accuracy, 
-							packets classified per second, and peak memory usage was recorded for the respective parameter count. This was done for the semi-supervised models
-							and the benchmark 2d-CNN.</p>
-							<h3 class="major">Results</h3>
-							<span class="image main"><img src="images/ryan_models/Figure_1.png" alt="" /></span>
-							<p>None of the semi-supervised models beat the benchmark 2d-CNN in terms of accuracy. However, the MLP comes the closest
-							with a peak accuracy of roughy 90%. This shows the MLPs ability to generalise well.
-							The PCA-1d-CNN was the worst peforming model with accuracies up to 84%. 1d-CNNs work specfically well with time-series data
-							and due to the fact the data was not in time-series format it did not perform as well. The PCA-2d-CNN reached accuracies
-							of up to 88%. The inferior performance to the MLP could be attributed to the fact that it could not learn the spatial
-							dependencies in the data with 100 records per feature. This could explain why the benchmark 2d-CNN performs very well but 
-							the PCA-2d-CNN does not perform as well.</p>
-							<span class="image main"><img src="images/ryan_models/Figure_2.png" alt="" /></span>
-							<p>All of the semi-supervised models out-perform the benchmark model in terms of packets classified per second.
-							This showed that using PCA to reduce classification time works. 
-							The general trend on these graphs was that when parameter size increases packets classified per second decreases.
-							This is to be expected as the more parameters, the more operations the model has to do during the forward-pass.
-							The PCA-CNN models were able to classify a similar
-							amount of packets per second for each paramater size. However, the PCA-MLP out-performed all of the models by a long way.
-							This is due to its simpleness and absence of complex mechanisms, unlike the CNN models.</p> 
-							<span class="image main"><img src="images/ryan_models/Figure_3.png" alt="" /></span>
-							<p>In this graph we see that peak memory usage generally increaes as paramater size increases. All of the models
-							had similar results but the MLP was slightly lower than the others in general. All of these memory usages
-							are small and should be able to be used on a community network for real time classification.</p>
-							<h3 class="major">Conclusion</h3>
-							<p>The PCA-MLP is the clear favourite to be used by the community network. It exhibits accuracy of above 90%
-							and can classify a very large amount of packets per second. This is perfect for real time classification in a 
-							low resource environment. A case can be made for the use of the benchmark 2d-CNN due to its high accuracy. However, 
-							due to its low packets classified per second, it is unlikely to work well for real-time classification.</p>
-				
-
-							</article>
-
-						<!-- Tumi's Page-->
-						<article id="tumi">
-							<h2 class="major">Boitumelo's Models</h2>
-
-							<p>
-								Boitumelo investigated the application of both Stacked Autoencoders (SAEs) and Recurrent Neural Networks 
-								(RNNs). The SAE architecture is designed for unsupervised feature reduction by approximating a non-linear 
-								function. Its capability to detect patterns within the dataset and generate a more compact representation
-								 of the data was leveraged to enhance the performance of the classification task. Two RNN classifiers, a 
-								 Multi-Layer Perceptron (MLP) and a Convolutional Neural Network (CNN), were compared for both their 
-								 classification effectiveness and computational efficiency.
-							</p>
-
-							<span class="image main"><img src="images/tumi_models/AE.png" alt="" /></span>
-
-							<h3 class="major"> Experiments</h3>
-
-							<p>
-								Each hybrid architecture was tested for both accuracy and efficiency across a range of sizes changing 
-								the number of parameters in each model. This was done for 
-							</p>
-
-
-							<h3 class="major">Results</h3>
-							<span class="image main">
-								<img src="images/tumi_models/Accuracy Graph.png">
-								<p> jjejjeje</p>
-							</span>
-
-
-							
-
-						</article>
-
-
-							<article id="about">
-								<h2 class="major">About</h2>
-								<span class="image main"><img src="images/pic03.jpg" alt="" /></span>
-								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
-							</article>
-
-						<!-- Contact -->
-							<article id="contact">
-								<h2 class="major">Contact</h2>
-								<form method="post" action="#">
-									<div class="fields">
-										<div class="field half">
-											<label for="name">Name</label>
-											<input type="text" name="name" id="name" />
-										</div>
-										<div class="field half">
-											<label for="email">Email</label>
-											<input type="text" name="email" id="email" />
-										</div>
-										<div class="field">
-											<label for="message">Message</label>
-											<textarea name="message" id="message" rows="4"></textarea>
-										</div>
-									</div>
-									<ul class="actions">
-										<li><input type="submit" value="Send Message" class="primary" /></li>
-										<li><input type="reset" value="Reset" /></li>
-									</ul>
-								</form>
-								<ul class="icons">
-									<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-								</ul>
-							</article>
-
-						<!-- Elements -->
-							<article id="elements">
-								<h2 class="major">Elements</h2>
-
-								<section>
-									<h3 class="major">Text</h3>
-									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
-									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
-									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
-									<hr />
-									<h2>Heading Level 2</h2>
-									<h3>Heading Level 3</h3>
-									<h4>Heading Level 4</h4>
-									<h5>Heading Level 5</h5>
-									<h6>Heading Level 6</h6>
-									<hr />
-									<h4>Blockquote</h4>
-									<blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.</blockquote>
-									<h4>Preformatted</h4>
-									<pre><code>i = 0;
+					<section>
+						<h3 class="major">Text</h3>
+						<p>
+							This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>. This is <sup>superscript</sup> text and this is
+							<sub>subscript</sub> text. This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.
+						</p>
+						<hr />
+						<h2>Heading Level 2</h2>
+						<h3>Heading Level 3</h3>
+						<h4>Heading Level 4</h4>
+						<h5>Heading Level 5</h5>
+						<h6>Heading Level 6</h6>
+						<hr />
+						<h4>Blockquote</h4>
+						<blockquote>
+							Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu
+							felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.
+						</blockquote>
+						<h4>Preformatted</h4>
+						<pre><code>i = 0;
 
 while (!deck.isInOrder()) {
     print 'Iteration ' + i;
@@ -309,238 +358,242 @@ while (!deck.isInOrder()) {
 }
 
 print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
-								</section>
+					</section>
 
-								<section>
-									<h3 class="major">Lists</h3>
+					<section>
+						<h3 class="major">Lists</h3>
 
-									<h4>Unordered</h4>
-									<ul>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Sagittis adipiscing.</li>
-										<li>Felis enim feugiat.</li>
-									</ul>
+						<h4>Unordered</h4>
+						<ul>
+							<li>Dolor pulvinar etiam.</li>
+							<li>Sagittis adipiscing.</li>
+							<li>Felis enim feugiat.</li>
+						</ul>
 
-									<h4>Alternate</h4>
-									<ul class="alt">
-										<li>Dolor pulvinar etiam.</li>
-										<li>Sagittis adipiscing.</li>
-										<li>Felis enim feugiat.</li>
-									</ul>
+						<h4>Alternate</h4>
+						<ul class="alt">
+							<li>Dolor pulvinar etiam.</li>
+							<li>Sagittis adipiscing.</li>
+							<li>Felis enim feugiat.</li>
+						</ul>
 
-									<h4>Ordered</h4>
-									<ol>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Etiam vel felis viverra.</li>
-										<li>Felis enim feugiat.</li>
-										<li>Dolor pulvinar etiam.</li>
-										<li>Etiam vel felis lorem.</li>
-										<li>Felis enim et feugiat.</li>
-									</ol>
-									<h4>Icons</h4>
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-									</ul>
+						<h4>Ordered</h4>
+						<ol>
+							<li>Dolor pulvinar etiam.</li>
+							<li>Etiam vel felis viverra.</li>
+							<li>Felis enim feugiat.</li>
+							<li>Dolor pulvinar etiam.</li>
+							<li>Etiam vel felis lorem.</li>
+							<li>Felis enim et feugiat.</li>
+						</ol>
+						<h4>Icons</h4>
+						<ul class="icons">
+							<li>
+								<a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a>
+							</li>
+							<li>
+								<a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a>
+							</li>
+							<li>
+								<a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a>
+							</li>
+							<li>
+								<a href="#" class="icon brands fa-github"><span class="label">Github</span></a>
+							</li>
+						</ul>
 
-									<h4>Actions</h4>
-									<ul class="actions">
-										<li><a href="#" class="button primary">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-									<ul class="actions stacked">
-										<li><a href="#" class="button primary">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-								</section>
+						<h4>Actions</h4>
+						<ul class="actions">
+							<li><a href="#" class="button primary">Default</a></li>
+							<li><a href="#" class="button">Default</a></li>
+						</ul>
+						<ul class="actions stacked">
+							<li><a href="#" class="button primary">Default</a></li>
+							<li><a href="#" class="button">Default</a></li>
+						</ul>
+					</section>
 
-								<section>
-									<h3 class="major">Table</h3>
-									<h4>Default</h4>
-									<div class="table-wrapper">
-										<table>
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Item One</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Two</td>
-													<td>Vis ac commodo adipiscing arcu aliquet.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Three</td>
-													<td> Morbi faucibus arcu accumsan lorem.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Four</td>
-													<td>Vitae integer tempus condimentum.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Five</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td colspan="2"></td>
-													<td>100.00</td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
+					<section>
+						<h3 class="major">Table</h3>
+						<h4>Default</h4>
+						<div class="table-wrapper">
+							<table>
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Price</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Item One</td>
+										<td>Ante turpis integer aliquet porttitor.</td>
+										<td>29.99</td>
+									</tr>
+									<tr>
+										<td>Item Two</td>
+										<td>Vis ac commodo adipiscing arcu aliquet.</td>
+										<td>19.99</td>
+									</tr>
+									<tr>
+										<td>Item Three</td>
+										<td>Morbi faucibus arcu accumsan lorem.</td>
+										<td>29.99</td>
+									</tr>
+									<tr>
+										<td>Item Four</td>
+										<td>Vitae integer tempus condimentum.</td>
+										<td>19.99</td>
+									</tr>
+									<tr>
+										<td>Item Five</td>
+										<td>Ante turpis integer aliquet porttitor.</td>
+										<td>29.99</td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="2"></td>
+										<td>100.00</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
 
-									<h4>Alternate</h4>
-									<div class="table-wrapper">
-										<table class="alt">
-											<thead>
-												<tr>
-													<th>Name</th>
-													<th>Description</th>
-													<th>Price</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>Item One</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Two</td>
-													<td>Vis ac commodo adipiscing arcu aliquet.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Three</td>
-													<td> Morbi faucibus arcu accumsan lorem.</td>
-													<td>29.99</td>
-												</tr>
-												<tr>
-													<td>Item Four</td>
-													<td>Vitae integer tempus condimentum.</td>
-													<td>19.99</td>
-												</tr>
-												<tr>
-													<td>Item Five</td>
-													<td>Ante turpis integer aliquet porttitor.</td>
-													<td>29.99</td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td colspan="2"></td>
-													<td>100.00</td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
-								</section>
+						<h4>Alternate</h4>
+						<div class="table-wrapper">
+							<table class="alt">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Description</th>
+										<th>Price</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Item One</td>
+										<td>Ante turpis integer aliquet porttitor.</td>
+										<td>29.99</td>
+									</tr>
+									<tr>
+										<td>Item Two</td>
+										<td>Vis ac commodo adipiscing arcu aliquet.</td>
+										<td>19.99</td>
+									</tr>
+									<tr>
+										<td>Item Three</td>
+										<td>Morbi faucibus arcu accumsan lorem.</td>
+										<td>29.99</td>
+									</tr>
+									<tr>
+										<td>Item Four</td>
+										<td>Vitae integer tempus condimentum.</td>
+										<td>19.99</td>
+									</tr>
+									<tr>
+										<td>Item Five</td>
+										<td>Ante turpis integer aliquet porttitor.</td>
+										<td>29.99</td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="2"></td>
+										<td>100.00</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</section>
 
-								<section>
-									<h3 class="major">Buttons</h3>
-									<ul class="actions">
-										<li><a href="#" class="button primary">Primary</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-									<ul class="actions">
-										<li><a href="#" class="button">Default</a></li>
-										<li><a href="#" class="button small">Small</a></li>
-									</ul>
-									<ul class="actions">
-										<li><a href="#" class="button primary icon solid fa-download">Icon</a></li>
-										<li><a href="#" class="button icon solid fa-download">Icon</a></li>
-									</ul>
-									<ul class="actions">
-										<li><span class="button primary disabled">Disabled</span></li>
-										<li><span class="button disabled">Disabled</span></li>
-									</ul>
-								</section>
+					<section>
+						<h3 class="major">Buttons</h3>
+						<ul class="actions">
+							<li><a href="#" class="button primary">Primary</a></li>
+							<li><a href="#" class="button">Default</a></li>
+						</ul>
+						<ul class="actions">
+							<li><a href="#" class="button">Default</a></li>
+							<li><a href="#" class="button small">Small</a></li>
+						</ul>
+						<ul class="actions">
+							<li><a href="#" class="button primary icon solid fa-download">Icon</a></li>
+							<li><a href="#" class="button icon solid fa-download">Icon</a></li>
+						</ul>
+						<ul class="actions">
+							<li><span class="button primary disabled">Disabled</span></li>
+							<li><span class="button disabled">Disabled</span></li>
+						</ul>
+					</section>
 
-								<section>
-									<h3 class="major">Form</h3>
-									<form method="post" action="#">
-										<div class="fields">
-											<div class="field half">
-												<label for="demo-name">Name</label>
-												<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane Doe" />
-											</div>
-											<div class="field half">
-												<label for="demo-email">Email</label>
-												<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld" />
-											</div>
-											<div class="field">
-												<label for="demo-category">Category</label>
-												<select name="demo-category" id="demo-category">
-													<option value="">-</option>
-													<option value="1">Manufacturing</option>
-													<option value="1">Shipping</option>
-													<option value="1">Administration</option>
-													<option value="1">Human Resources</option>
-												</select>
-											</div>
-											<div class="field half">
-												<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-												<label for="demo-priority-low">Low</label>
-											</div>
-											<div class="field half">
-												<input type="radio" id="demo-priority-high" name="demo-priority">
-												<label for="demo-priority-high">High</label>
-											</div>
-											<div class="field half">
-												<input type="checkbox" id="demo-copy" name="demo-copy">
-												<label for="demo-copy">Email me a copy</label>
-											</div>
-											<div class="field half">
-												<input type="checkbox" id="demo-human" name="demo-human" checked>
-												<label for="demo-human">Not a robot</label>
-											</div>
-											<div class="field">
-												<label for="demo-message">Message</label>
-												<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-											</div>
-										</div>
-										<ul class="actions">
-											<li><input type="submit" value="Send Message" class="primary" /></li>
-											<li><input type="reset" value="Reset" /></li>
-										</ul>
-									</form>
-								</section>
-
-							</article>
-
-					</div>
-
-				<!-- Footer -->
-					<footer id="footer">
-						<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-					</footer>
-
+					<section>
+						<h3 class="major">Form</h3>
+						<form method="post" action="#">
+							<div class="fields">
+								<div class="field half">
+									<label for="demo-name">Name</label>
+									<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane Doe" />
+								</div>
+								<div class="field half">
+									<label for="demo-email">Email</label>
+									<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld" />
+								</div>
+								<div class="field">
+									<label for="demo-category">Category</label>
+									<select name="demo-category" id="demo-category">
+										<option value="">-</option>
+										<option value="1">Manufacturing</option>
+										<option value="1">Shipping</option>
+										<option value="1">Administration</option>
+										<option value="1">Human Resources</option>
+									</select>
+								</div>
+								<div class="field half">
+									<input type="radio" id="demo-priority-low" name="demo-priority" checked />
+									<label for="demo-priority-low">Low</label>
+								</div>
+								<div class="field half">
+									<input type="radio" id="demo-priority-high" name="demo-priority" />
+									<label for="demo-priority-high">High</label>
+								</div>
+								<div class="field half">
+									<input type="checkbox" id="demo-copy" name="demo-copy" />
+									<label for="demo-copy">Email me a copy</label>
+								</div>
+								<div class="field half">
+									<input type="checkbox" id="demo-human" name="demo-human" checked />
+									<label for="demo-human">Not a robot</label>
+								</div>
+								<div class="field">
+									<label for="demo-message">Message</label>
+									<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+								</div>
+							</div>
+							<ul class="actions">
+								<li><input type="submit" value="Send Message" class="primary" /></li>
+								<li><input type="reset" value="Reset" /></li>
+							</ul>
+						</form>
+					</section>
+				</article>
 			</div>
 
+			<!-- Footer -->
+			<footer id="footer">
+				<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+			</footer>
+		</div>
+
 		<!-- BG -->
-			<div id="bg"></div>
+		<div id="bg"></div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
 	</body>
 </html>
