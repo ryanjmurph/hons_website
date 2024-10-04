@@ -97,7 +97,7 @@
 								<h2 class="major">Preprocessing</h2>
 								<span class="image main"><img src="images/prepro.png" alt="" /></span>
 								<h2>Stage 1: Data Collection</h2>
-								<p>Data was collected from the Ocean View community network in 2019. These were raw PCAP files that capture network
+								<p>Data was collected from the Ocean View community network in 2019. These were raw PCAP files that captured network
 									traffic to and from the community network. The data was collected ethically.
 								</p> 
 								<br>
@@ -110,7 +110,7 @@
 								<h2>Stage 3: Label Flows</h2>
 								<p> As the classification step in this project is a supervised learning problem, we will need labels for each packet.
 									The raw PCAP files do not come with labels and therefore we needed to find them ourselves. We used a deep packet
-									inspection tool called nDPI to label the data that was recently put into flows.
+									inspection tool called ,<i>nDPI</i> to label the data that was recently put into flows.
 								</p>
 								<span class="image main"><img src="images/p_images/ndpi.png" alt="" /></span>
 								<h2>Stage 4: Extracting the IP Payload</h2>
@@ -120,10 +120,10 @@
 								</p>
 								<span class="image main"><img src="images/p_images/extraction.png" alt="" /></span>
 								<h2>Stage 5: Balancing Classes</h2>
-								<p>After labelling the packets and extracting the payloads, we discovered that the data was very unbalanced with smoother
-								packets being highly overrepresented and some highly underrepresented. Therfore, we decided to get rid of the classes
-								that were underrepresented and reduce the overrepresented classes to a maximum of 10000 per class. This left us with a dataset
-								of 10 classes with 9000-10000 of each class. This improved training as the model could learn each type of class equally well
+								<p>After labelling the packets and extracting the payloads, we discovered that the data was very unbalanced with some 
+								packet types being highly overrepresented and some highly underrepresented. Therfore, we decided to get rid of the classes
+								that were underrepresented and reduce the overrepresented classes to a maximum of 10000 per class with 10 classes. This left us with a dataset
+								of 10 classes with 9000-10000 records of each class. This improved training as the model could learn each type of class equally well
 								and got rid of any biases due to unbalcned data.</p>
 								<span class="image main"><img src="images/p_images/histo.png" alt="" /></span>
 								<h2>Stage 6: Train, Test, Validation sets</h2>
@@ -158,35 +158,48 @@
 							<h2><a href="Documents/Michael Literature Review.pdf">Michael's Literature Review</a></h2>
 							<object data="Documents/Michael Literature Review.pdf" type="application/pdf" width="100%" height="150%">Documents/Michael's Literature Review.pdf</object>
 							<a href="Documents/Michael Literature Review.pdf" class="button">Download</a>
+
+							<h2><a href="Documents/Ryan Literature Review.pdf">Ryan's Literature Review</a></h2>
+							<object data="Documents/Ryan Literature Review.pdf" type="application/pdf" width="100%" height="150%">Documents/Ryan's Literature Review.pdf</object>
+							<a href="Documents/Ryan Literature Review.pdf" class="button">Download</a>
+
+							<h2><a href="Documents/Ryan Final Paper.pdf">Ryan's Final Paper</a></h2>
+							<object data="Documents/Ryan Final Paper.pdf" type="application/pdf" width="100%" height="150%">Documents/Ryan's Final Paper.pdf</object>
+							<a href="Documents/Ryan Final Paper.pdf" class="button">Download</a>
+
+
+
 						</article>
 
 						<!-- Ryan's Page -->
 						<article id="ryan">
 							<h2 class="major">Ryan's Models</h2>
-							<span class="image main"><img src="images/ryan_models/pca.webp" alt="" /></span>
+							
 							<p>Ryan produced a series of semi-supervised models that include a 1d Convolutional Neural Network (1d-CNN), 2d Convolutional Neural Network (2d-CNN)
-								and a Multi-layer Perceptron (MLP). Before data was fed into these models. Principal Component Analysis (PCA)
-								was applied to reduce the feature space down from 1480 to 100. PCA reduces the feature space while keeping as much variance
+								and a Multi-layer Perceptron (MLP). Before data was fed into these models, Principal Component Analysis (PCA)
+								was applied to reduce the feature space down from 1480 to 100 features. PCA reduces the feature space while keeping as much variance
 								in the data as possible. The feature reduction
-								was to reduce the amount of model parameters which lead to faster classification and less memory used.
+								was to reduce the amount of model parameters which lead to faster classification and less memory usage.
 							</p>
+							<span class="image main"><img src="images/ryan_models/pca.webp" alt="" /></span>
 							<h3 class="major">Experiments</h3>
-							<p>The model's hyperparameters were tuned extensively to try and find a hyperparameter combination that led to both fast and accurate models.
-							After the hyperparameters were chosen, the experimentation began. The paramater count for each model was varied and tested with test accuracy, 
+							<p>The model's hyperparameters were tuned extensively to find a hyperparameter arrangement that led to both fast and accurate models.
+							After the hyperparameters were chosen, the experimentation began. The paramater count for each model was varied and test accuracy, 
 							packets classified per second, and peak memory usage was recorded for the respective parameter count. This was done for the semi-supervised models
 							and the benchmark 2d-CNN.</p>
 							<h3 class="major">Results</h3>
 							<span class="image main"><img src="images/ryan_models/Figure_1.png" alt="" /></span>
-							<p>None of the semi-supervised models beat the benchmark 2d-CNN in terms of accuracy. However, the MLP comes the closest
-							with a peak accuracy of roughy 90%. This shows the MLPs ability to generalise well.
-							The PCA-1d-CNN was the worst peforming model with accuracies up to 84%. 1d-CNNs work specfically well with time-series data
-							and due to the fact the data was not in time-series format it did not perform as well. The PCA-2d-CNN reached accuracies
+							<p>None of the semi-supervised models outperformed the benchmark 2d-CNN in terms of accuracy. However, the MLP comes the closest
+							with a peak accuracy of roughy 90%. This shows the MLPs ability to generalise well to data.
+							The PCA-1d-CNN was the worst peforming model with an accuracy of up to 84%. 1d-CNNs work specfically well with time-series data
+							and due to the fact the data was not in time-series format, it did not perform as well. The PCA-2d-CNN reached accuracies
 							of up to 88%. The inferior performance to the MLP could be attributed to the fact that it could not learn the spatial
-							dependencies in the data with 100 records per feature. This could explain why the benchmark 2d-CNN performs very well but 
-							the PCA-2d-CNN does not perform as well.</p>
+							dependencies in the data with 100 records per feature. This could explain why the benchmark 2d-CNN performs very well with 1480 features
+							because it is able to learn spatial features and 
+							the PCA-2d-CNN not performinh as well with 100 features.</p>
 							<span class="image main"><img src="images/ryan_models/Figure_2.png" alt="" /></span>
 							<p>All of the semi-supervised models out-perform the benchmark model in terms of packets classified per second.
-							This showed that using PCA to reduce classification time works. 
+							This showed that using PCA to reduce classification time works well. 
 							The general trend on these graphs was that when parameter size increases packets classified per second decreases.
 							This is to be expected as the more parameters, the more operations the model has to do during the forward-pass.
 							The PCA-CNN models were able to classify a similar
@@ -618,10 +631,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 					</div>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-					</footer>
+
 
 			</div>
 
